@@ -24,19 +24,19 @@ const connectAndSubscribe = (onMessageCallback, onErrorCallback) => {
     console.log("Connected to MQTT broker!");
 
     // Subscribe to topics
-    client.subscribe("sensors/temp", (err) => {
+    client.subscribe("sensor/temp", (err) => {
       if (err) {
-        console.error("Failed to subscribe to sensors/temp:", err.message);
+        console.error("Failed to subscribe to sensor/temp:", err.message);
       } else {
-        console.log("Subscribed to sensors/temp");
+        console.log("Subscribed to sensor/temp");
       }
     });
 
-    client.subscribe("sensors/humidity", (err) => {
+    client.subscribe("sensor/humidity", (err) => {
       if (err) {
-        console.error("Failed to subscribe to sensors/humidity:", err.message);
+        console.error("Failed to subscribe to sensor/humidity:", err.message);
       } else {
-        console.log("Subscribed to sensors/humidity");
+        console.log("Subscribed to sensor/humidity");
       }
     });
   });
@@ -64,6 +64,7 @@ const connectAndSubscribe = (onMessageCallback, onErrorCallback) => {
   });
 };
 
+// Function to publish messages
 const publish = (topic, payload) => {
   if (client && client.connected) {
     client.publish(topic, payload, (err) => {
@@ -78,4 +79,13 @@ const publish = (topic, payload) => {
   }
 };
 
-export default { connectAndSubscribe, publish };
+// Gracefully disconnect the client
+const disconnect = () => {
+  if (client) {
+    client.end(() => {
+      console.log("Disconnected from MQTT broker.");
+    });
+  }
+};
+
+export default { connectAndSubscribe, publish, disconnect };

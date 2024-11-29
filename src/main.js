@@ -1,10 +1,8 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import 'bootstrap/dist/css/bootstrap.css';
+import App from './App.vue';
 
-const app = createApp(App)
-
-// Use Pinia for global state management
-app.use(createPinia())
-
-app.mount('#app')
+const app = createApp(App);
+app.use(createPinia());
+app.mount('#app');
